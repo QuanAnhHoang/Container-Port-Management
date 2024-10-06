@@ -589,10 +589,50 @@ public class PortManagementSystem {
             System.out.println("Port not found.");
             return;
         }
-        // Implement port modification logic here
+    
+        System.out.println("Current port details:");
+        System.out.println(port);
+    
+        System.out.println("Enter new details (press Enter to keep current value):");
+    
+        System.out.print("Name [" + port.getName() + "]: ");
+        String name = scanner.nextLine();
+        if (!name.isEmpty()) {
+            port.setName(name);
+        }
+    
+        System.out.print("Latitude [" + port.getLatitude() + "]: ");
+        String latitudeStr = scanner.nextLine();
+        if (!latitudeStr.isEmpty()) {
+            double latitude = Double.parseDouble(latitudeStr);
+            port.setLatitude(latitude);
+        }
+    
+        System.out.print("Longitude [" + port.getLongitude() + "]: ");
+        String longitudeStr = scanner.nextLine();
+        if (!longitudeStr.isEmpty()) {
+            double longitude = Double.parseDouble(longitudeStr);
+            port.setLongitude(longitude);
+        }
+    
+        System.out.print("Storing Capacity [" + port.getStoringCapacity() + "]: ");
+        String capacityStr = scanner.nextLine();
+        if (!capacityStr.isEmpty()) {
+            int capacity = Integer.parseInt(capacityStr);
+            port.setStoringCapacity(capacity);
+        }
+    
+        System.out.print("Landing Ability [" + port.hasLandingAbility() + "]: ");
+        String landingStr = scanner.nextLine();
+        if (!landingStr.isEmpty()) {
+            boolean landingAbility = Boolean.parseBoolean(landingStr);
+            port.setLandingAbility(landingAbility);
+        }
+    
         System.out.println("Port modified successfully.");
+        saveData();
     }
-
+    
     public void modifyVehicle() {
         System.out.print("Enter vehicle ID to modify: ");
         String vehicleId = scanner.nextLine();
@@ -601,10 +641,46 @@ public class PortManagementSystem {
             System.out.println("Vehicle not found.");
             return;
         }
-        // Implement vehicle modification logic here
+    
+        System.out.println("Current vehicle details:");
+        System.out.println(vehicle);
+    
+        System.out.println("Enter new details (press Enter to keep current value):");
+    
+        System.out.print("Name [" + vehicle.getName() + "]: ");
+        String name = scanner.nextLine();
+        if (!name.isEmpty()) {
+            vehicle.setName(name);
+        }
+    
+        System.out.print("Fuel Capacity [" + vehicle.getFuelCapacity() + "]: ");
+        String fuelCapacityStr = scanner.nextLine();
+        if (!fuelCapacityStr.isEmpty()) {
+            double fuelCapacity = Double.parseDouble(fuelCapacityStr);
+            vehicle.setFuelCapacity(fuelCapacity);
+        }
+    
+        System.out.print("Carrying Capacity [" + vehicle.getCarryingCapacity() + "]: ");
+        String carryingCapacityStr = scanner.nextLine();
+        if (!carryingCapacityStr.isEmpty()) {
+            int carryingCapacity = Integer.parseInt(carryingCapacityStr);
+            vehicle.setCarryingCapacity(carryingCapacity);
+        }
+    
+        if (vehicle instanceof Truck) {
+            Truck truck = (Truck) vehicle;
+            System.out.print("Truck Type [" + truck.getType() + "]: ");
+            String truckTypeStr = scanner.nextLine();
+            if (!truckTypeStr.isEmpty()) {
+                Truck.TruckType truckType = Truck.TruckType.valueOf(truckTypeStr.toUpperCase());
+                truck.setType(truckType);
+            }
+        }
+    
         System.out.println("Vehicle modified successfully.");
+        saveData();
     }
-
+    
     public void modifyContainer() {
         System.out.print("Enter container ID to modify: ");
         String containerId = scanner.nextLine();
@@ -613,10 +689,30 @@ public class PortManagementSystem {
             System.out.println("Container not found.");
             return;
         }
-        // Implement container modification logic here
+    
+        System.out.println("Current container details:");
+        System.out.println(container);
+    
+        System.out.println("Enter new details (press Enter to keep current value):");
+    
+        System.out.print("Weight [" + container.getWeight() + "]: ");
+        String weightStr = scanner.nextLine();
+        if (!weightStr.isEmpty()) {
+            double weight = Double.parseDouble(weightStr);
+            container.setWeight(weight);
+        }
+    
+        System.out.print("Type [" + container.getType() + "]: ");
+        String typeStr = scanner.nextLine();
+        if (!typeStr.isEmpty()) {
+            Container.ContainerType type = Container.ContainerType.valueOf(typeStr.toUpperCase());
+            container.setType(type);
+        }
+    
         System.out.println("Container modified successfully.");
+        saveData();
     }
-
+    
     public void modifyUser() {
         System.out.print("Enter username to modify: ");
         String username = scanner.nextLine();
@@ -625,8 +721,35 @@ public class PortManagementSystem {
             System.out.println("User not found.");
             return;
         }
-        // Implement user modification logic here
+    
+        System.out.println("Current user details:");
+        System.out.println("Username: " + user.getUsername());
+        System.out.println("User Type: " + user.getClass().getSimpleName());
+    
+        System.out.println("Enter new details (press Enter to keep current value):");
+    
+        System.out.print("New Password: ");
+        String password = scanner.nextLine();
+        if (!password.isEmpty()) {
+            user.setPassword(password);
+        }
+    
+        if (user instanceof PortManager) {
+            PortManager portManager = (PortManager) user;
+            System.out.print("Managed Port ID [" + portManager.getManagedPort().getId() + "]: ");
+            String portId = scanner.nextLine();
+            if (!portId.isEmpty()) {
+                Port newPort = ports.stream().filter(p -> p.getId().equals(portId)).findFirst().orElse(null);
+                if (newPort != null) {
+                    portManager.setManagedPort(newPort);
+                } else {
+                    System.out.println("Port not found. Managed port remains unchanged.");
+                }
+            }
+        }
+    
         System.out.println("User modified successfully.");
+        saveData();
     }
 
     public Scanner getScanner() {
@@ -705,10 +828,9 @@ public class PortManagementSystem {
             // Update vehicle location
             vehicle.setCurrentPort(arrivalPort);
         }
-    
+
         // Save all data
         saveData();
         System.out.println("Sample data created successfully.");
     }
-
 }

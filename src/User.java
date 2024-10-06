@@ -15,6 +15,10 @@ public abstract class User implements Serializable {
         this.permissions = new ArrayList<>();
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
     public String getUsername() {
         return username;
     }

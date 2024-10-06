@@ -17,6 +17,10 @@ public class Truck extends Vehicle {
             return fuelConsumptionRate;
         }
     }
+    
+    public void setType(TruckType type) {
+        this.type = type;
+    }
 
     public Truck(String id, String name, double fuelCapacity, int carryingCapacity, TruckType type) {
         super(id, name, fuelCapacity, carryingCapacity);

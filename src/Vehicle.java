@@ -110,4 +110,18 @@ public abstract class Vehicle implements VehicleInterface, Serializable {
     protected double getTotalContainerWeight() {
         return containers.stream().mapToDouble(Container::getWeight).sum();
     }
+
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setFuelCapacity(double fuelCapacity) {
+        this.fuelCapacity = fuelCapacity;
+    }
+
+    public void setCarryingCapacity(int carryingCapacity) {
+        this.carryingCapacity = carryingCapacity;
+    }
+
 }

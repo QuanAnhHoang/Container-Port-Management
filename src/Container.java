@@ -31,6 +31,14 @@ public class Container implements ContainerInterface, Serializable {
         }
     }
 
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public void setType(ContainerType type) {
+        this.type = type;
+    }
+
     public Container(String id, double weight, ContainerType type) {
         this.id = id;
         this.weight = weight;

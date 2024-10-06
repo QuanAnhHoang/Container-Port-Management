@@ -49,7 +49,85 @@ public class SystemAdmin extends User {
             case "2":
                 system.removeVehicle();
                 break;
-            // Implement other cases
+            case "3":
+                system.addPort();
+                break;
+            case "4":
+                system.removePort();
+                break;
+            case "5":
+                system.addContainer();
+                break;
+            case "6":
+                system.removeContainer();
+                break;
+            case "7":
+                system.addManager();
+                break;
+            case "8":
+                system.removeManager();
+                break;
+            case "9":
+                viewAllData(system);
+                break;
+            case "10":
+                modifyData(system);
+                break;
+            case "11":
+                system.calculateFuelUsage();
+                break;
+            case "12":
+                system.calculateContainerWeights();
+                break;
+            case "13":
+                system.listShipsInPort();
+                break;
+            case "14":
+                system.listTripsOnDate();
+                break;
+            case "15":
+                system.listTripsBetweenDates();
+                break;
+            case "0":
+                System.out.println("Logging out...");
+                break;
+            default:
+                System.out.println("Invalid option. Please try again.");
+        }
+    }
+
+    private void viewAllData(PortManagementSystem system) {
+        System.out.println("Viewing all data:");
+        system.listAllPorts();
+        system.listAllVehicles();
+        system.listAllContainers();
+        system.listAllUsers();
+    }
+
+    private void modifyData(PortManagementSystem system) {
+        System.out.println("Modify Data:");
+        System.out.println("1. Modify Port");
+        System.out.println("2. Modify Vehicle");
+        System.out.println("3. Modify Container");
+        System.out.println("4. Modify User");
+        System.out.println("0. Back to Main Menu");
+
+        String choice = system.getScanner().nextLine();
+        switch (choice) {
+            case "1":
+                system.modifyPort();
+                break;
+            case "2":
+                system.modifyVehicle();
+                break;
+            case "3":
+                system.modifyContainer();
+                break;
+            case "4":
+                system.modifyUser();
+                break;
+            case "0":
+                return;
             default:
                 System.out.println("Invalid option. Please try again.");
         }

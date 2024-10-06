@@ -123,6 +123,26 @@ public class Port implements PortInterface, Serializable {
         return R * c;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setStoringCapacity(int storingCapacity) {
+        this.storingCapacity = storingCapacity;
+    }
+
+    public void setLandingAbility(boolean landingAbility) {
+        this.landingAbility = landingAbility;
+    }
+
     private double getTotalContainerWeight() {
         return containers.stream().mapToDouble(Container::getWeight).sum();
     }
