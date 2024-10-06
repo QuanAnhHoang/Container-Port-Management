@@ -753,7 +753,7 @@ public class PortManagementSystem {
     }
 
     public Scanner getScanner() {
-        return scanner;
+        return this.scanner;
     }
 
     public void createSampleData() {

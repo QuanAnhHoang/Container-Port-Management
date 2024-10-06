@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.*;
-import java.lang.reflect.Type;
 
 public class FileHandler {
     private static final String DATA_DIRECTORY = "data/";
