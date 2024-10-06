@@ -8,16 +8,21 @@ public class FileHandler {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DATA_DIRECTORY + fileName))) {
             oos.writeObject(data);
         } catch (IOException e) {
+            System.err.println("Error saving data to " + fileName + ": " + e.getMessage());
             e.printStackTrace();
         }
     }
 
     public static <T> List<T> loadData(String fileName) {
         List<T> data = new ArrayList<>();
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DATA_DIRECTORY + fileName))) {
-            data = (List<T>) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+        File file = new File(DATA_DIRECTORY + fileName);
+        if (file.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+                data = (List<T>) ois.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                System.err.println("Error loading data from " + fileName + ": " + e.getMessage());
+                e.printStackTrace();
+            }
         }
         return data;
     }
@@ -60,5 +65,12 @@ public class FileHandler {
 
     public static List<Trip> loadTrips() {
         return loadData("trips.dat");
+    }
+
+    static {
+        File directory = new File(DATA_DIRECTORY);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
     }
 }
