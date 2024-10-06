@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.*;
+import java.lang.reflect.Type;
 
 public class FileHandler {
     private static final String DATA_DIRECTORY = "data/";
@@ -13,12 +14,19 @@ public class FileHandler {
         }
     }
 
-    public static <T> List<T> loadData(String fileName) {
+    public static <T> List<T> loadData(String fileName, Class<T> type) {
         List<T> data = new ArrayList<>();
         File file = new File(DATA_DIRECTORY + fileName);
         if (file.exists()) {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-                data = (List<T>) ois.readObject();
+                Object obj = ois.readObject();
+                if (obj instanceof List<?>) {
+                    for (Object item : (List<?>) obj) {
+                        if (type.isInstance(item)) {
+                            data.add(type.cast(item));
+                        }
+                    }
+                }
             } catch (IOException | ClassNotFoundException e) {
                 System.err.println("Error loading data from " + fileName + ": " + e.getMessage());
                 e.printStackTrace();
@@ -32,7 +40,7 @@ public class FileHandler {
     }
 
     public static List<User> loadUsers() {
-        return loadData("users.dat");
+        return loadData("users.dat", User.class);
     }
 
     public static void savePorts(List<Port> ports) {
@@ -40,7 +48,7 @@ public class FileHandler {
     }
 
     public static List<Port> loadPorts() {
-        return loadData("ports.dat");
+        return loadData("ports.dat", Port.class);
     }
 
     public static void saveVehicles(List<Vehicle> vehicles) {
@@ -48,7 +56,7 @@ public class FileHandler {
     }
 
     public static List<Vehicle> loadVehicles() {
-        return loadData("vehicles.dat");
+        return loadData("vehicles.dat", Vehicle.class);
     }
 
     public static void saveContainers(List<Container> containers) {
@@ -56,7 +64,7 @@ public class FileHandler {
     }
 
     public static List<Container> loadContainers() {
-        return loadData("containers.dat");
+        return loadData("containers.dat", Container.class);
     }
 
     public static void saveTrips(List<Trip> trips) {
@@ -64,7 +72,7 @@ public class FileHandler {
     }
 
     public static List<Trip> loadTrips() {
-        return loadData("trips.dat");
+        return loadData("trips.dat", Trip.class);
     }
 
     static {
