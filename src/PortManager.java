@@ -1,6 +1,8 @@
 import java.util.Arrays;
 
 public class PortManager extends User {
+    private static final long serialVersionUID = 1L;
+    
     private Port managedPort;
 
     public PortManager(String username, String password, Port managedPort) {
@@ -34,7 +36,17 @@ public class PortManager extends User {
     }
 
     @Override
-    public void processOperation(String operation) {
-        // Implementation will be added later when PortManagementSystem is created
+    public void processOperation(String operation, PortManagementSystem system) {
+        switch (operation) {
+            case "1":
+                system.addContainer(managedPort);
+                break;
+            case "2":
+                system.removeContainer(managedPort);
+                break;
+            // Implement other cases
+            default:
+                System.out.println("Invalid option. Please try again.");
+        }
     }
 }
