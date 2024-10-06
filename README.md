@@ -108,7 +108,20 @@ A user can do some statistics operations:
 
 Note that all the history is only kept for 7 days.
 
-
 ## Welcome Screen
 
 When completing your application, it should have a welcome screen.
+
+## Submission
+
+- No external libraries can be used. 
+
+- Your work will be tested with Java 20 JVM. 
+
+- The entry point of your program (i.e. the main() method) must be in a file named Main.java. If I cannot start from Main, I will consider your program is not able to run. 
+
+***
+
+# Technical Aspects
+
+## Project Structure
