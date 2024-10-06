@@ -125,3 +125,83 @@ When completing your application, it should have a welcome screen.
 # Technical Aspects
 
 ## Project Structure
+
+    Container-Port-Management/
+    ├── src/
+    │   ├── main/
+    │   │   └── java/
+    │   │       └── com/
+    │   │           ├── Main.java - The entry point of the program.
+    │   │           ├── PortManagementSystem.java - Orchestrates the entire system.
+    │   │           ├── interfaces/
+    │   │           │   ├── ContainerInterface.java - Interface for Container operations.
+    │   │           │   ├── PortInterface.java - Interface for Port operations.
+    │   │           │   └── VehicleInterface.java - Interface for Vehicle operations.
+    │   │           ├── models/
+    │   │           │   ├── Container.java - Represents a container.
+    │   │           │   ├── Port.java - Represents a port.
+    │   │           │   ├── Trip.java - Represents a trip.
+    │   │           │   ├── User.java - Abstract class for users.
+    │   │           │   ├── Vehicle.java - Abstract class for vehicles.
+    │   │           │   ├── Ship.java - Represents a ship.
+    │   │           │   └── Truck.java - Represents a truck.
+    │   │           ├── users/
+    │   │           │   ├── SystemAdmin.java - Represents the system admin.
+    │   │           │   └── PortManager.java - Represents the port manager.
+    │   │           └── utils/
+    │   │               └── FileHandler.java - Handles file operations.
+    └── data/
+        ├── containers.dat
+        ├── ports.dat
+        ├── trips.dat
+        ├── users.dat
+        └── vehicles.dat
+
+## Classes and Interfaces
+
+### a. Core Model Classes
+- Container
+- Port
+- Vehicle (abstract)
+- Ship (extends Vehicle)
+- Truck (extends Vehicle)
+- Trip
+- User (abstract)
+
+### b. User Classes
+- SystemAdmin (extends User)
+- PortManager (extends User)
+
+### c. Utility Class
+- FileHandler
+
+### d. Main System Class
+- PortManagementSystem
+
+### e. Interfaces
+- ContainerInterface
+- PortInterface
+- VehicleInterface
+
+## OOP Principles Applied
+
+a. Encapsulation
+- Private attributes with public getter/setter methods
+- Implementation details hidden within classes
+
+b. Inheritance
+- Vehicle -> Ship/Truck
+- User -> SystemAdmin/PortManager
+
+c. Polymorphism
+- Vehicle's calculateRequiredFuel method is overridden in Ship and Truck
+- User's abstract methods are implemented differently in SystemAdmin and PortManager
+
+d. Abstraction:
+- Abstract classes: Vehicle and User
+- Interfaces: ContainerInterface, PortInterface, VehicleInterface
+
+## Personal Contributions
+
+
+***
