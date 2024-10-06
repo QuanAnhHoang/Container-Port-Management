@@ -1,3 +1,5 @@
+package com.models;
+
 public class Ship extends Vehicle {
     private static final long serialVersionUID = 1L;
     private static final double FUEL_CONSUMPTION_RATE = 3.5; // gallons per ton per km
@@ -7,7 +9,7 @@ public class Ship extends Vehicle {
     }
 
     @Override
-    protected double calculateRequiredFuel(Port destination) {
+    public double calculateRequiredFuel(Port destination) {
         if (currentPort == null) {
             throw new IllegalStateException("Ship is not at any port");
         }

@@ -1,3 +1,7 @@
+package com.interfaces;
+
+import com.models.Container;
+import com.models.Port;
 import java.util.List;
 
 public interface VehicleInterface {
@@ -14,4 +18,5 @@ public interface VehicleInterface {
     boolean canMove(Port destination);
     void move(Port destination);
     void refuel(double amount);
+    double calculateRequiredFuel(Port destination);
 }

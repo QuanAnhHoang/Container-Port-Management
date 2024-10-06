@@ -1,3 +1,6 @@
+package com.models;
+
+import com.interfaces.PortInterface;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

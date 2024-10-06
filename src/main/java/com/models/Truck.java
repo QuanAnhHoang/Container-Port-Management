@@ -1,3 +1,5 @@
+package com.models;
+
 public class Truck extends Vehicle {
     private static final long serialVersionUID = 1L;
     private TruckType type;
@@ -32,7 +34,7 @@ public class Truck extends Vehicle {
     }
 
     @Override
-    protected double calculateRequiredFuel(Port destination) {
+    public double calculateRequiredFuel(Port destination) {
         if (currentPort == null) {
             throw new IllegalStateException("Truck is not at any port");
         }

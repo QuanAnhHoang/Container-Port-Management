@@ -1,3 +1,9 @@
+package com.interfaces;
+
+import com.models.Container;
+import com.models.Vehicle;
+import com.models.Trip;
+import com.models.Port;
 import java.util.List;
 
 public interface PortInterface {

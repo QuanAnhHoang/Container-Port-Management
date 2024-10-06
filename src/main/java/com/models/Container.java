@@ -1,3 +1,6 @@
+package com.models;
+
+import com.interfaces.ContainerInterface;
 import java.io.Serializable;
 
 public class Container implements ContainerInterface, Serializable {
