@@ -1,4 +1,5 @@
 public class Truck extends Vehicle {
+    private static final long serialVersionUID = 1L;
     private TruckType type;
 
     public enum TruckType {
