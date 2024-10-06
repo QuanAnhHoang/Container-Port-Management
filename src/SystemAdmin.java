@@ -1,6 +1,8 @@
 import java.util.Arrays;
 
 public class SystemAdmin extends User {
+    private static final long serialVersionUID = 1L;
+
     public SystemAdmin(String username, String password) {
         super(username, password);
         this.permissions.addAll(Arrays.asList(
@@ -39,7 +41,17 @@ public class SystemAdmin extends User {
     }
 
     @Override
-    public void processOperation(String operation) {
-        // Implementation will be added later when PortManagementSystem is created
+    public void processOperation(String operation, PortManagementSystem system) {
+        switch (operation) {
+            case "1":
+                system.addVehicle();
+                break;
+            case "2":
+                system.removeVehicle();
+                break;
+            // Implement other cases
+            default:
+                System.out.println("Invalid option. Please try again.");
+        }
     }
 }
