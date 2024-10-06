@@ -1,5 +1,4 @@
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class PortManager extends User {
     private static final long serialVersionUID = 1L;
@@ -89,22 +88,21 @@ public class PortManager extends User {
         System.out.println("3. Change Landing Ability");
         System.out.println("0. Back to Main Menu");
 
-        Scanner scanner = new Scanner(System.in);
-        String choice = scanner.nextLine();
+        String choice = system.getScanner().nextLine();
         switch (choice) {
             case "1":
                 System.out.print("Enter new name: ");
-                String newName = scanner.nextLine();
+                String newName = system.getScanner().nextLine();
                 managedPort.setName(newName);
                 break;
             case "2":
                 System.out.print("Enter new storing capacity: ");
-                int newCapacity = Integer.parseInt(scanner.nextLine());
+                int newCapacity = Integer.parseInt(system.getScanner().nextLine());
                 managedPort.setStoringCapacity(newCapacity);
                 break;
             case "3":
                 System.out.print("Enter new landing ability (true/false): ");
-                boolean newLandingAbility = Boolean.parseBoolean(scanner.nextLine());
+                boolean newLandingAbility = Boolean.parseBoolean(system.getScanner().nextLine());
                 managedPort.setLandingAbility(newLandingAbility);
                 break;
             case "0":
