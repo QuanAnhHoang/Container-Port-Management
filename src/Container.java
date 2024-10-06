@@ -1,4 +1,8 @@
-public class Container implements ContainerInterface {
+import java.io.Serializable;
+
+public class Container implements ContainerInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String id;
     private double weight;
     private ContainerType type;
