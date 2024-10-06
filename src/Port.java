@@ -1,7 +1,10 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Port implements PortInterface {
+public class Port implements PortInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String id;
     private String name;
     private double latitude;
