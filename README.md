@@ -203,5 +203,7 @@ d. Abstraction:
 
 ## Personal Contributions
 
+- Worked on fuel consumption calculation system adaptable to different vehicle and container types.
+- Worked on distance calculation feature using the Haversine formula, enabling accurate fuel requirement estimations for trips between ports.
 
 ***
