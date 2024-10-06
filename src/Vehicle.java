@@ -1,7 +1,10 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Vehicle implements VehicleInterface {
+public abstract class Vehicle implements VehicleInterface, Serializable {
+    private static final long serialVersionUID = 1L;
+
     protected String id;
     protected String name;
     protected double currentFuel;
