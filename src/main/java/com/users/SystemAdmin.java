@@ -4,25 +4,46 @@ import com.models.User;
 import com.PortManagementSystem;
 import java.util.Arrays;
 
+/**
+ * Represents a System Administrator user in the Port Management System.
+ * SystemAdmin has full access to all system operations.
+ */
 public class SystemAdmin extends User {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Constructs a new SystemAdmin user.
+     *
+     * @param username The username of the SystemAdmin.
+     * @param password The password of the SystemAdmin.
+     */
     public SystemAdmin(String username, String password) {
         super(username, password);
+        // Grant all permissions to the SystemAdmin
         this.permissions.addAll(Arrays.asList(
             "add_vehicle", "remove_vehicle",
             "add_port", "remove_port",
             "add_container", "remove_container",
             "add_manager", "remove_manager",
-            "view_all", "modify_all"
+            "view_all", "modify_all" //, potentially more permissions
         ));
     }
 
+    /**
+     * Checks if the SystemAdmin has permission for a specific operation.
+     * SystemAdmin always has permission for all operations.
+     *
+     * @param operation The operation to check permission for.
+     * @return True if the SystemAdmin has permission (which is always true), false otherwise.
+     */
     @Override
     public boolean hasPermission(String operation) {
         return permissions.contains(operation);
     }
 
+    /**
+     * Displays the System Admin menu.
+     */
     @Override
     public void displayMenu() {
         System.out.println("System Admin Menu:");

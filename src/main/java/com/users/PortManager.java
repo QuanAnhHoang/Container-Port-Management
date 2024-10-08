@@ -5,14 +5,29 @@ import com.models.Port;
 import com.PortManagementSystem;
 import java.util.Arrays;
 
+/**
+ * Represents a Port Manager user in the Port Management System.
+ * Port Managers have specific permissions related to managing a port.
+ */
 public class PortManager extends User {
-    private static final long serialVersionUID = 1L;
-    
+    private static final long serialVersionUID = 1L; // Serialization version UID
+
+    /**
+     * The port managed by this PortManager.
+     */
     private Port managedPort;
 
+    /**
+     * Constructs a new PortManager.
+     *
+     * @param username    The username of the PortManager.
+     * @param password    The password of the PortManager.
+     * @param managedPort The port to be managed by this PortManager.
+     */
     public PortManager(String username, String password, Port managedPort) {
         super(username, password);
         this.managedPort = managedPort;
+        // Add specific permissions for PortManager
         this.permissions.addAll(Arrays.asList(
             "add_container", "remove_container",
             "view_port", "modify_port",
@@ -20,19 +35,38 @@ public class PortManager extends User {
         ));
     }
 
+    /**
+     * Sets the managed port for this PortManager.
+     *
+     * @param managedPort The new port to be managed.
+     */
     public void setManagedPort(Port managedPort) {
         this.managedPort = managedPort;
     }
 
+    /**
+     * Gets the port managed by this PortManager.
+     *
+     * @return The managed port.
+     */
     public Port getManagedPort() {
         return managedPort;
     }
 
+    /**
+     * Checks if the PortManager has permission for a specific operation.
+     *
+     * @param operation The operation to check permission for.
+     * @return True if the PortManager has permission, false otherwise.
+     */
     @Override
     public boolean hasPermission(String operation) {
         return permissions.contains(operation);
     }
 
+    /**
+     * Displays the Port Manager menu.
+     */
     @Override
     public void displayMenu() {
         System.out.println("Port Manager Menu:");
@@ -45,26 +79,32 @@ public class PortManager extends User {
         System.out.println("0. Logout");
     }
 
+    /**
+     * Processes the selected operation from the Port Manager menu.
+     *
+     * @param operation The operation code selected by the user.
+     * @param system    The PortManagementSystem instance.
+     */
     @Override
     public void processOperation(String operation, PortManagementSystem system) {
         switch (operation) {
             case "1":
-                system.addContainer();
+                system.addContainer(); // Delegate adding container to the system
                 break;
             case "2":
-                system.removeContainer();
+                system.removeContainer(); // Delegate removing container to the system
                 break;
             case "3":
-                viewPortData();
+                viewPortData(); // View details of the managed port
                 break;
             case "4":
-                modifyPortData(system);
+                modifyPortData(system); // Modify data of the managed port
                 break;
             case "5":
-                system.listShipsInPort();
+                system.listShipsInPort(); // Delegate listing ships to the system
                 break;
             case "6":
-                system.calculateContainerWeights();
+                system.calculateContainerWeights(); // Delegate weight calculation to the system
                 break;
             case "0":
                 System.out.println("Logging out...");
@@ -74,6 +114,9 @@ public class PortManager extends User {
         }
     }
 
+    /**
+     * Displays the details of the managed port.
+     */
     private void viewPortData() {
         System.out.println("Port Data:");
         System.out.println("ID: " + managedPort.getId());
@@ -86,6 +129,11 @@ public class PortManager extends User {
         System.out.println("Current Vehicle Count: " + managedPort.getVehicleCount());
     }
 
+    /**
+     * Allows modification of the managed port's data.
+     *
+     * @param system The PortManagementSystem instance.
+     */
     private void modifyPortData(PortManagementSystem system) {
         System.out.println("Modify Port Data:");
         System.out.println("1. Change Name");
@@ -98,24 +146,24 @@ public class PortManager extends User {
             case "1":
                 System.out.print("Enter new name: ");
                 String newName = system.getScanner().nextLine();
-                managedPort.setName(newName);
+                managedPort.setName(newName); // Update port name
                 break;
             case "2":
                 System.out.print("Enter new storing capacity: ");
                 int newCapacity = Integer.parseInt(system.getScanner().nextLine());
-                managedPort.setStoringCapacity(newCapacity);
+                managedPort.setStoringCapacity(newCapacity); // Update storing capacity
                 break;
             case "3":
                 System.out.print("Enter new landing ability (true/false): ");
                 boolean newLandingAbility = Boolean.parseBoolean(system.getScanner().nextLine());
-                managedPort.setLandingAbility(newLandingAbility);
+                managedPort.setLandingAbility(newLandingAbility); // Update landing ability
                 break;
             case "0":
-                return;
+                return; // Return to main menu
             default:
                 System.out.println("Invalid option. Please try again.");
         }
         System.out.println("Port data updated successfully.");
-        system.updatePort(managedPort);
+        system.updatePort(managedPort); // Update the port in the system
     }
 }

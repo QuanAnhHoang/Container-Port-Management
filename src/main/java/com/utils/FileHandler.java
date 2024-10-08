@@ -1,32 +1,53 @@
 package com.utils;
 
 import com.models.*;
-import com.users.*;
 import java.io.*;
 import java.util.*;
 
+/**
+ * Utility class for handling file operations, specifically saving and loading data to/from files.
+ * Uses serialization for object persistence.
+ */
 public class FileHandler {
+    /**
+     * The directory where data files are stored.
+     */
     private static final String DATA_DIRECTORY = "data/";
 
-    public static void saveData(String fileName, List<?> data) {
+    /**
+     * Saves a list of objects to a file using serialization.
+     *
+     * @param fileName The name of the file to save the data to.
+     * @param data     The list of objects to be saved.
+     * @param <T>      The type of objects in the list.
+     */
+    public static <T> void saveData(String fileName, List<T> data) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DATA_DIRECTORY + fileName))) {
-            oos.writeObject(data);
+            oos.writeObject(data); // Write the list to the file
         } catch (IOException e) {
             System.err.println("Error saving data to " + fileName + ": " + e.getMessage());
             e.printStackTrace();
         }
     }
 
+    /**
+     * Loads a list of objects from a file using serialization.
+     *
+     * @param fileName The name of the file to load data from.
+     * @param type     The class of the objects to be loaded.
+     * @param <T>      The type of objects in the list.
+     * @return A list of loaded objects, or an empty list if the file doesn't exist or an error occurs.
+     */
     public static <T> List<T> loadData(String fileName, Class<T> type) {
         List<T> data = new ArrayList<>();
         File file = new File(DATA_DIRECTORY + fileName);
-        if (file.exists()) {
+        if (file.exists()) { // Check if the file exists
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-                Object obj = ois.readObject();
-                if (obj instanceof List<?>) {
-                    for (Object item : (List<?>) obj) {
-                        if (type.isInstance(item)) {
-                            data.add(type.cast(item));
+                Object obj = ois.readObject(); // Read the object from the file
+                if (obj instanceof List<?>) { // Check if the object is a list
+                    for (Object item : (List<?>) obj) { // Iterate through the list
+                        if (type.isInstance(item)) { // Check if the item is of the correct type
+                            data.add(type.cast(item)); // Cast and add the item to the list
                         }
                     }
                 }

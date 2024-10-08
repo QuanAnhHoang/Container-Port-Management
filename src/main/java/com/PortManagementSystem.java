@@ -7,15 +7,29 @@ import java.util.*;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
 
+/**
+ * The main class for the Port Management System.
+ * Handles user interaction, data management, and system operations.
+ */
 public class PortManagementSystem {
+
+    // Lists to store system data
     private List<User> users;
     private List<Port> ports;
     private List<Vehicle> vehicles;
     private List<Container> containers;
     private List<Trip> trips;
+
+    // The currently logged-in user
     private User currentUser;
+
+    // Scanner for user input
     private Scanner scanner;
 
+    /**
+     * Constructor for the PortManagementSystem.
+     * Initializes data lists and loads data from files.
+     */
     public PortManagementSystem() {
         users = new ArrayList<>();
         ports = new ArrayList<>();
@@ -23,9 +37,13 @@ public class PortManagementSystem {
         containers = new ArrayList<>();
         trips = new ArrayList<>();
         scanner = new Scanner(System.in);
-        loadData();
+        loadData(); // Load data from files on startup
     }
 
+    /**
+     * Loads data from files using the FileHandler.
+     * Creates a default SystemAdmin if no users exist.
+     */
     private void loadData() {
         users = FileHandler.loadUsers();
         ports = FileHandler.loadPorts();
@@ -33,11 +51,15 @@ public class PortManagementSystem {
         containers = FileHandler.loadContainers();
         trips = FileHandler.loadTrips();
 
+        // Create a default admin user if no users are loaded
         if (users.isEmpty()) {
             users.add(new SystemAdmin("admin", "admin123"));
         }
     }
 
+    /**
+     * Saves data to files using the FileHandler.
+     */
     private void saveData() {
         FileHandler.saveUsers(users);
         FileHandler.savePorts(ports);
@@ -46,23 +68,30 @@ public class PortManagementSystem {
         FileHandler.saveTrips(trips);
     }
 
+    /**
+     * Starts the Port Management System.
+     * Handles login/logout and user interaction.
+     */
     public void start() {
         System.out.println("Welcome to the Port Management System");
-        while (true) {
+        while (true) { // Main system loop
             if (currentUser == null) {
-                login();
+                login(); // Prompt for login if no user is logged in
             } else {
-                currentUser.displayMenu();
-                String choice = scanner.nextLine();
+                currentUser.displayMenu(); // Display the menu for the current user type
+                String choice = scanner.nextLine(); // Get user input
                 if (choice.equals("0")) {
-                    logout();
+                    logout(); // Logout if the user chooses 0
                 } else {
-                    currentUser.processOperation(choice, this);
+                    currentUser.processOperation(choice, this); // Process the user's choice
                 }
             }
         }
     }
 
+/**
+     * Handles user login. Prompts for username and password, and authenticates against existing users.
+     */
     private void login() {
         System.out.print("Enter username: ");
         String username = scanner.nextLine();
@@ -79,14 +108,20 @@ public class PortManagementSystem {
         System.out.println("Invalid username or password. Please try again.");
     }
 
+    /**
+     * Handles user logout. Sets the current user to null and saves data.
+     */
     private void logout() {
         currentUser = null;
         System.out.println("Logged out successfully.");
         saveData();
     }
 
-
+    /**
+     * Adds a new PortManager to the system. Only accessible by SystemAdmin.
+     */
     public void addManager() {
+        // Check if the current user is a SystemAdmin
         if (!(currentUser instanceof SystemAdmin)) {
             System.out.println("You don't have permission to add managers.");
             return;
@@ -99,6 +134,7 @@ public class PortManagementSystem {
         System.out.print("Enter port ID for the manager: ");
         String portId = scanner.nextLine();
 
+        // Find the port by ID
         Port managedPort = ports.stream()
                 .filter(p -> p.getId().equals(portId))
                 .findFirst()
@@ -109,13 +145,18 @@ public class PortManagementSystem {
             return;
         }
 
+        // Create and add the new PortManager
         PortManager newManager = new PortManager(username, password, managedPort);
         users.add(newManager);
         System.out.println("Port manager added successfully.");
         saveData();
     }
 
+    /**
+     * Removes a PortManager from the system. Only accessible by SystemAdmin.
+     */
     public void removeManager() {
+        // Check if the current user is a SystemAdmin
         if (!(currentUser instanceof SystemAdmin)) {
             System.out.println("You don't have permission to remove managers.");
             return;
@@ -124,6 +165,7 @@ public class PortManagementSystem {
         System.out.print("Enter manager username to remove: ");
         String username = scanner.nextLine();
 
+        // Find the manager to remove
         User managerToRemove = users.stream()
                 .filter(u -> u instanceof PortManager && u.getUsername().equals(username))
                 .findFirst()
@@ -138,19 +180,22 @@ public class PortManagementSystem {
         }
     }
 
+    /**
+     * Calculates the total fuel usage for a given date.
+     */
     public void calculateFuelUsage() {
         System.out.print("Enter date (YYYY-MM-DD): ");
         LocalDate date = LocalDate.parse(scanner.nextLine());
 
         double totalFuelUsed = trips.stream()
-                .filter(trip -> trip.getDepartureDate().equals(date) || 
+                .filter(trip -> trip.getDepartureDate().equals(date) ||
                                 (trip.getArrivalDate() != null && trip.getArrivalDate().equals(date)))
                 .mapToDouble(trip -> {
                     Vehicle vehicle = trip.getVehicle();
                     Port arrivalPort = trip.getArrivalPort();
-                    return vehicle.calculateRequiredFuel(arrivalPort);
+                    return vehicle.calculateRequiredFuel(arrivalPort); // Calculate fuel used for each trip
                 })
-                .sum();
+                .sum(); // Sum the fuel usage for all trips on the specified date
 
         System.out.printf("Total fuel used on %s: %.2f gallons\n", date, totalFuelUsed);
     }
