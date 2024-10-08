@@ -3,15 +3,6 @@
 
 ***
 
-# Assessment Details
-
-This assignment provides a chance for students to practice and apply all concepts learned so far. It is also an opportunity to get familiar with the analysis, design, and development of a software application with a practical project idea to get ready for life and work. In this assignment, you are
-asked to implement a text-based program using Java language and OOP techniques. There are 6 main parts:
-
-- OOP design and implementation: you need to design and implement a class hierarchy to make your program flexible and easy to maintain. 
-- Problem-solving tasks: you need to apply control statements, algorithms, data structures, etc. to solve different tasks. 
-- For simplicity, all interaction with the application will be done via a simple text interface (no GUI is required). However, it will provide all basic functionalities of a practical application (which may be further developed after completion). 
-
 # Problem Details
 
 As the global economy develops steadily, the amount of traffic between container ports is adding pressure to the ports to increase capacity. Besides physical expansion, the alternative solution to increasing capacity is via increased port performance. Therefore, a need for a digital management system is required to replace the traditional paper-based system.
@@ -159,29 +150,23 @@ When completing your application, it should have a welcome screen.
 
 ## Classes and Interfaces
 
-### a. Core Model Classes
-- Container
-- Port
-- Vehicle (abstract)
-- Ship (extends Vehicle)
-- Truck (extends Vehicle)
-- Trip
-- User (abstract)
+| Category          | Class/Interface      | Description                                                                  |
+|-------------------|----------------------|------------------------------------------------------------------------------|
+| **Core Model**       | `Container`          | Represents a shipping container.                                             |
+|                    | `Port`               | Represents a port.                                                          |
+|                    | `Vehicle (abstract)` | Abstract class representing a vehicle.                                       |
+|                    | `Ship`               | Represents a ship (extends Vehicle).                                         |
+|                    | `Truck`              | Represents a truck (extends Vehicle).                                        |
+|                    | `Trip`               | Represents a trip.                                                           |
+|                    | `User (abstract)`    | Abstract class representing a user.                                          |
+| **User**             | `SystemAdmin`        | Represents a system administrator (extends User).                            |
+|                    | `PortManager`        | Represents a port manager (extends User).                                   |
+| **Utility**          | `FileHandler`        | Handles file operations.                                                    |
+| **Main System**      | `PortManagementSystem` | The main class that orchestrates the system.                               |
+| **Interfaces**       | `ContainerInterface` | Interface for container interactions.                                      |
+|                    | `PortInterface`      | Interface for port interactions.                                            |
+|                    | `VehicleInterface`  | Interface for vehicle interactions.                                         |
 
-### b. User Classes
-- SystemAdmin (extends User)
-- PortManager (extends User)
-
-### c. Utility Class
-- FileHandler
-
-### d. Main System Class
-- PortManagementSystem
-
-### e. Interfaces
-- ContainerInterface
-- PortInterface
-- VehicleInterface
 
 ## OOP Principles Applied
 
@@ -203,7 +188,15 @@ d. Abstraction:
 
 ## Personal Contributions
 
-- Worked on fuel consumption calculation system adaptable to different vehicle and container types.
-- Worked on distance calculation feature using the Haversine formula, enabling accurate fuel requirement estimations for trips between ports.
+### 1. Worked on fuel consumption calculation system adaptable to different vehicle and container types
+- In the Vehicle abstract class, implemented the calculateRequiredFuel method, which is then overridden in the Ship and Truck subclasses to provide specific fuel consumption calculations.
+- In the Ship class, implemented a constant FUEL_CONSUMPTION_RATE and used it in the calculateRequiredFuel method to calculate fuel consumption based on distance, total weight of containers, and the ship-specific consumption rate.
+- In the Truck class, created an enum TruckType with different fuel consumption rates for each type (BASIC, REEFER, TANKER). The calculateRequiredFuel method in this class uses these type-specific rates to calculate fuel consumption.
+- In the Container class, implemented a ContainerType enum with specific fuel consumption rates for both ships and trucks. The calculateFuelConsumption method in this class uses these rates to calculate fuel consumption based on the container type, weight, distance, and whether it's being transported by ship or truck.
+
+### 2. Worked on distance calculation feature using the Haversine formula, enabling accurate fuel requirement estimations for trips between ports
+- In the Port class, implemented the calculateDistance method, which uses the Haversine formula to calculate the great-circle distance between two ports based on their latitude and longitude coordinates.
+- This method takes into account the Earth's radius and uses trigonometric functions to accurately calculate the distance between two points on a sphere (in this case, the Earth).
+- The distance calculation is used in the fuel consumption calculations in both the Ship and Truck classes, allowing for precise estimations of fuel requirements for trips between ports.
 
 ***
